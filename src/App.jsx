@@ -7,46 +7,48 @@ import { StatusBars } from './components/StatusBars'
 import { ActionButtons } from './components/ActionButtons'
 import { GameOver } from './components/GameOver'
 import { EggSelection } from './components/EggSelection'
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
 
 function App() {
   const [petName, setPetName] = useState('Tama')
-  const [screen, setScreen] = useState('eggSelection') // 'eggSelection' | 'playing' | 'gameOver'
-  const gameActive = screen === 'playing'
+  const location = useLocation()
+  const navigate = useNavigate()
+  const gameActive = location.pathname === '/play'
   const { pet, isAlive, stage, feed, play, sleep, clean, formatAge, resetGame } = usePetActions(petName, gameActive)
-  const handleReset = () => { resetGame(); setScreen('eggSelection') }
-
+  const handleReset = () => { resetGame(); navigate('/egg-selection', { replace: true }) }
   const showDebugPanel = import.meta.env.DEV
 
   useEffect(() => {
-    if (screen === "playing" && !isAlive) setScreen('gameOver')
-  }, [screen, isAlive])
+    if (location.pathname === '/play' && !isAlive) {
+      navigate('/game-over', { replace: true })
+    }
+  }, [isAlive, location.pathname, navigate])
 
   return (
     <div className='container mx-auto'>
-      
-      {screen === 'eggSelection' ? (
-        <EggSelection selectEgg={(eggId, petName) => {
+      <Routes>
+        <Route path="/" element={<EggSelection selectEgg={(eggId, petName) => {
           setPetName(petName)
-          setScreen('playing')
-        }} />
-      ) : screen === 'playing' ? (
-        <div className="min-h-screen flex flex-col items-center justify-center p-4">
-          <h1 className="text-4xl font-bold mb-8">Virtual Pet</h1>
-          <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
-            <Pet pet={pet} isAlive={isAlive} />
-            <StatusBars pet={pet} />
-            <ActionButtons feed={feed} play={play} sleep={sleep} clean={clean} isAlive={isAlive} />
-            <p className="text-xs text-gray-400 mt-4 break-all mt-2">{JSON.stringify(pet)}</p>
+          navigate('/play', { replace: true })
+        }} />} />
+        <Route path="/play" element={
+          <div className="min-h-screen flex flex-col items-center justify-center p-4">
+            <h1 className="text-4xl font-bold mb-8">Virtual Pet</h1>
+            <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
+              <Pet pet={pet} isAlive={isAlive} />
+              <StatusBars pet={pet} />
+              <ActionButtons feed={feed} play={play} sleep={sleep} clean={clean} isAlive={isAlive} />
+              <p className="text-xs text-gray-400 mt-4 break-all mt-2">{JSON.stringify(pet)}</p>
+            </div>
           </div>
-        </div>
-      ) : screen === 'gameOver' ? (
-        <GameOver pet={pet} isAlive={isAlive} formatAge={formatAge} resetGame={handleReset} />
-      ) : null }
+        } />
+        <Route path="/game-over" element={<GameOver pet={pet} isAlive={isAlive} formatAge={formatAge} resetGame={handleReset} />} />
+      </Routes>
 
       {showDebugPanel && (
         <DebugPanel
+          route={location.pathname}
           pet={pet}
-          screen={screen}
           gameActive={gameActive}
           isAlive={isAlive}
         />

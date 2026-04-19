@@ -20,5 +20,4 @@ export function GameOver({ pet, isAlive, formatAge, resetGame }) {
             </div>
         )
     }
-    return null;
 }
