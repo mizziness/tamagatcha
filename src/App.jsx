@@ -3,15 +3,8 @@ import { useState, useEffect } from 'react'
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
 
 import { usePetActions } from './usePetActions'
-import { Pet } from './components/Pet'
 import { DebugPanel } from './components/DebugPanel'
-import { StatusBars } from './components/StatusBars'
-import { ActionButtons } from './components/ActionButtons'
-import { GameOver } from './components/GameOver'
-import { EggSelection } from './components/EggSelection'
 import { Nav } from './components/Nav'
-import { Register } from './pages/Register'
-import { Account } from './pages/Account'
 import { AppRoutes } from './routes/AppRoutes'
 
 
