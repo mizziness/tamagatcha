@@ -1,8 +1,12 @@
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
-import { Link } from 'react-router-dom'
+import { PATHS } from '../routes/AppRoutes'
 
 export function Register() {
-    const { user, isLoggedIn, logout } = useAuthStore()
+    const navigate = useNavigate()
+    const { isLoggedIn } = useAuthStore()
+    const { login, register } = useAuthStore()
 
     return (
         <div className="flex min-h-screen flex-col items-center justify-center p-4">
@@ -11,8 +15,17 @@ export function Register() {
                     <div className="mt-4 w-full max-w-md">
                         <p className="text-center text-xl">Already have an account?</p>
 
-                        <form className="p-4" onSubmit={(e) => {
+                        <form id="login-form" className="p-4" onSubmit={(e) => {
                             e.preventDefault()
+                            const username = e.target.username.value
+                            const password = e.target.password.value
+
+                            const result = login(username, password)
+                            if (result.ok) {
+                                navigate(PATHS.ACCOUNT, { replace: true })
+                            } else {
+                                alert(result.error)
+                            }
                         }}>
                             <input type="text" name="username" placeholder="Username" autoComplete='username' required className="mb-4 w-full rounded border bg-white p-2" />
                             <input type="password" name="password" placeholder="Password" autoComplete='current-password' required className="mb-4 w-full rounded border bg-white p-2" />
@@ -23,11 +36,19 @@ export function Register() {
 
                         </form>
 
-                        
                         <p className="mt-8 text-center text-xl">Otherwise, register for a new account:</p>
                         
-                        <form className="border-minsk-950 text-minsk-950 mt-4 rounded border bg-white p-4" onSubmit={(e) => {
+                        <form id="register-form" className="border-minsk-950 text-minsk-950 mt-4 rounded border bg-white p-4" onSubmit={(e) => {
                             e.preventDefault()
+                            const username = e.target.username.value
+                            const password = e.target.password.value
+                            const email = e.target.email.value
+                            const result = register(username, email, password)
+                            if (result.ok) {
+                                navigate(PATHS.ACCOUNT, { replace: true })
+                            } else {
+                                alert(result.error)
+                            }
                         }}>
 
                             <input type="text" name="username" placeholder="Username" autoComplete='username' required className="mb-4 w-full rounded border p-2" />

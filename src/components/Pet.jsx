@@ -1,7 +1,6 @@
-import { usePetActions } from '../usePetActions'
+import { formatAge } from '../usePetActions'
 
 export function Pet({ pet, isAlive }) {
-    const { formatAge } = usePetActions()
 
     // Helper: Get pet mood
     const getMood = () => {

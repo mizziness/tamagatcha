@@ -7,13 +7,25 @@ export function Nav() {
     return (
         <nav className="bg-minsk-950 flex items-center justify-between p-4 text-white">
             <ul className="flex w-full items-end justify-end gap-4 px-4 text-right">
+                
+                {isLoggedIn && (
+                    <li>
+                        <span className="mr-2">Hello, {user.username}!</span>
+                    </li>
+                )}
+              
                 <li>
                     <Link to="/" className="hover:text-minsk-300">Home</Link>
                 </li>
                 {isLoggedIn && (
-                    <li>
-                        <Link to="/account" className="hover:text-minsk-300">Account</Link>
-                    </li>
+                    <>
+                        <li>
+                            <Link to="/account" className="hover:text-minsk-300">Account</Link>
+                        </li>
+                        <li>
+                            <button onClick={logout} className="hover:text-minsk-300">Logout</button>
+                        </li>
+                    </>
                 )}
                 {!isLoggedIn && (
                     <>
