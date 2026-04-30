@@ -1,20 +1,21 @@
-# TamaGatcha
+<span style="text-align: center;">
 
 [![React](https://img.shields.io/badge/React-19-20232A?logo=react&logoColor=61DAFB)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite&logoColor=FFD62E)](https://vite.dev/)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=FFD62E)](https://vite.dev/)
 [![React Router](https://img.shields.io/badge/React_Router-7-CA4245?logo=reactrouter&logoColor=white)](https://reactrouter.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![React Spring](https://img.shields.io/badge/React_Spring-Animation-6DB33F)](https://www.react-spring.dev/)
-[![Zustand](https://img.shields.io/badge/Zustand-State_Store-7C5CFC)](https://zustand-demo.pmnd.rs/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![React Spring](https://img.shields.io/badge/React_Spring-10-6DB33F)](https://www.react-spring.dev/)
+[![Zustand](https://img.shields.io/badge/Zustand-5-7C5CFC)](https://zustand-demo.pmnd.rs/)
 
-A Tamagotchi-style virtual pet browser-based game built with React, Vite, and React Router.
+# TamaGatcha
 
-TamaGatcha is a local-first virtual pet game where players hatch, care for, and eventually lose pets over time. Data is currently persisted in localStorage (accounts, active session, pets, and active pet).
+<img width="300" height="68" src="https://github.com/mizziness/tamagatcha/blob/main/public/images/egg_previews.png?raw=true" style="margin: 2rem auto; display: block;" />
 
-## Preview
+A Tamagotchi-style virtual pet browser game built with React, Vite, and React Router.
 
-> TODO: Add a screenshot or short GIF.
+TamaGatcha is a local-first virtual pet game where players hatch, care for, and eventually lose pets over time. Data is persisted in localStorage (accounts, active session, pets, eggs, and per-pet events).
+
+</span>
 
 ## Features
 
@@ -31,9 +32,10 @@ TamaGatcha is a local-first virtual pet game where players hatch, care for, and 
   - Play
   - Sleep
   - Clean
-- Automatic stat decay over time
+- Automatic stat decay over time with stage-based aging
 - Egg animation system (idle wiggle, hover bounce, reroll fade transitions)
 - Per-user pet persistence in localStorage
+- Activity/event log for each pet (hatch, actions, stage changes, death)
 - Game-over flow with restart from hatchery
 - Route-based navigation with React Router
 - Local auth with Zustand (register/login)
@@ -46,6 +48,7 @@ TamaGatcha is a local-first virtual pet game where players hatch, care for, and 
 - Tailwind CSS
 - React Spring
 - Zustand
+- Jest
 
 ## Routes
 
@@ -62,18 +65,29 @@ TamaGatcha is a local-first virtual pet game where players hatch, care for, and 
 ```bash
 npm install
 npm run dev
+npm test
 ```
 
 ## Project Structure
 
 ```
+gameConfig.js
 src/
   components/   Shared UI components
+    EventLog.jsx
+    ProtectedRoute.jsx
   pages/        Route-level page components
+    Play.jsx
   routes/       Route definitions and path constants
   store/        Zustand stores
-  useAccountActions.js
-  usePetActions.js
+    authStore.js
+    eggStore.js
+    petStore.js
+  helpers/      Gameplay and utility helpers
+    eggSelection.utils.js
+    gameTiming.js
+    petRules.js
+    usePetActions.js
 ```
 
 ## Current Status
@@ -84,6 +98,8 @@ The current app supports:
 - Persistent active pet updates while navigating routes
 - Egg hatch flow with reroll UX and rarity labeling
 - Local auth/session handling
+- Pet activity/event log on the Play screen
+- Unit test setup with Jest
 
 In progress:
 
