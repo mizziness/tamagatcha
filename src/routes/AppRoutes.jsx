@@ -10,15 +10,15 @@ import { Routes, Route } from 'react-router-dom'
 
 
 export function AppRoutes({ onSelectEgg, gameProps }) {
-	return (
-		<Routes>
-			<Route path={PATHS.ACCOUNT}     element={<Account />} />
-			<Route path={PATHS.COLLECTION}  element={<Collection />} />
-			<Route path={PATHS.GAME_OVER}   element={<GameOver />} />
-			<Route path={PATHS.HATCH}       element={<EggSelection selectEgg={onSelectEgg} />} />
-			<Route path={PATHS.HOME}        element={<Home />} />
-			<Route path={PATHS.PLAY}        element={<Play {...gameProps} />} />
-			<Route path={PATHS.REGISTER}    element={<Register />} />
-		</Routes>
-	)
+  return (
+    <Routes>
+      <Route path={PATHS.ACCOUNT}     element={<Account />} />
+      <Route path={PATHS.COLLECTION}  element={<Collection />} />
+      <Route path={PATHS.GAME_OVER}   element={<GameOver />} />
+      <Route path={PATHS.HATCH}       element={<EggSelection selectEgg={onSelectEgg} />} />
+      <Route path={PATHS.HOME}        element={<Home />} />
+      <Route path={PATHS.PLAY}        element={<Play {...gameProps} />} />
+      <Route path={PATHS.REGISTER}    element={<Register />} />
+    </Routes>
+  )
 }

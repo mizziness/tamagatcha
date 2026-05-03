@@ -1,7 +1,8 @@
 import { create } from 'zustand'
+import { safeParseSession } from '../helpers/utilities'
 
 export const useAuthStore = create((set) => {
-  const session = JSON.parse(localStorage.getItem('tamagacha_session')) || null
+  const session = safeParseSession(localStorage.getItem('tamagacha_session'))
 
   return {
     user: session ? { username: session.username, email: session.email } : null,

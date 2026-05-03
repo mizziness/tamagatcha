@@ -24,6 +24,8 @@ export default defineConfig([
     },
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      indent: ['warn', 2, { SwitchCase: 1 }],
+      'no-tabs': 'warn',
     },
   },
 ])
