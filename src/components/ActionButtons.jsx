@@ -1,6 +1,6 @@
 export function ActionButtons({ feed, play, sleep, clean, isAlive }) {
   const base =
-    'px-4 py-2 rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed'
+    'px-4 py-2 rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed '
 
   return (
     <div className="mt-6 grid grid-cols-2 gap-3">
