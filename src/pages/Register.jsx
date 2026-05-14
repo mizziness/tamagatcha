@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 import { PATHS } from "../routes/paths";
+import { cleanUserInput } from "../helpers/utilities";
 
 const checkUsername = (username) => {
   if (username.length < 5) {
@@ -42,18 +43,12 @@ const checkEmail = (email) => {
 
 const submitLogin = (e, login, navigate) => {
   e.preventDefault();
-  const username =  e.target.username.value;
+  const username = cleanUserInput(e.target.username.value);
   const password = e.target.password.value;
 
   const usernameError = checkUsername(username);
   if (usernameError) {
     alert(usernameError);
-    return;
-  }
-
-  const passwordError = checkPassword(password);
-  if (passwordError) {
-    alert(passwordError);
     return;
   }
 
@@ -67,9 +62,9 @@ const submitLogin = (e, login, navigate) => {
 
 const submitRegister = (e, register, navigate) => {
   e.preventDefault();
-  const username = e.target.username.value;
+  const username = cleanUserInput(e.target.username.value);
   const password = e.target.password.value;
-  const email = e.target.email.value;
+  const email = e.target.email.value.trim().toLowerCase();
 
   const usernameError = checkUsername(username);
   if (usernameError) {
@@ -94,7 +89,7 @@ const submitRegister = (e, register, navigate) => {
     navigate(PATHS.ACCOUNT, { replace: true });
   } else {
     alert(result.error);
-  } 
+  }
 }
 
 export function Register() {
@@ -145,16 +140,6 @@ export function Register() {
                   autoComplete="current-password"
                   required
                   className="mb-4 w-full rounded border bg-white p-2"
-                  onKeyUp={(e) => {
-                    const checkResult = checkPassword(e.target.value);
-                    if (checkResult) {
-                      e.target.classList.add("border-rose-500", "outline-rose-500", "invalid");
-                      e.target.parentElement.querySelector(".error-message").textContent = checkResult;
-                    } else {
-                      e.target.classList.remove("border-rose-500", "outline-rose-500", "invalid");
-                      e.target.parentElement.querySelector(".error-message").textContent = "";
-                    }
-                  }}
                 />
                 <p className="error-message text-sm leading-[100%]"></p>
               </label>
@@ -193,7 +178,7 @@ export function Register() {
                     } else {
                       e.target.classList.remove("border-rose-500", "outline-rose-500", "invalid");
                       e.target.parentElement.querySelector(".error-message").textContent = "";
-                    }                  
+                    }
                   }}
                 />
                 <p className="error-message text-sm leading-[100%]"></p>

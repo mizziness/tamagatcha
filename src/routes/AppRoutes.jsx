@@ -7,17 +7,18 @@ import { PATHS } from '../routes/paths'
 import { Play } from '../pages/Play'
 import { Register } from '../pages/Register'
 import { Routes, Route } from 'react-router-dom'
+import { ProtectedRoute } from '../components/ProtectedRoute'
 
 
 export function AppRoutes({ onSelectEgg, gameProps }) {
   return (
     <Routes>
-      <Route path={PATHS.ACCOUNT}     element={<Account />} />
-      <Route path={PATHS.COLLECTION}  element={<Collection />} />
-      <Route path={PATHS.GAME_OVER}   element={<GameOver />} />
-      <Route path={PATHS.HATCH}       element={<EggSelection selectEgg={onSelectEgg} />} />
+      <Route path={PATHS.ACCOUNT}     element={<ProtectedRoute><Account /></ProtectedRoute>} />
+      <Route path={PATHS.COLLECTION}  element={<ProtectedRoute><Collection /></ProtectedRoute>} />
+      <Route path={PATHS.GAME_OVER}   element={<ProtectedRoute><GameOver /></ProtectedRoute>} />
+      <Route path={PATHS.HATCH}       element={<ProtectedRoute><EggSelection selectEgg={onSelectEgg} /></ProtectedRoute>} />
       <Route path={PATHS.HOME}        element={<Home />} />
-      <Route path={PATHS.PLAY}        element={<Play {...gameProps} />} />
+      <Route path={PATHS.PLAY}        element={<ProtectedRoute><Play {...gameProps} /></ProtectedRoute>} />
       <Route path={PATHS.REGISTER}    element={<Register />} />
     </Routes>
   )

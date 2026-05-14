@@ -21,7 +21,12 @@ function App() {
   const gameProps = usePetActions(activePetId !== null, speed);
 
   const handleSelectEgg = (petName, egg) => {
-    if (user) createPet(user.username, petName, egg);
+    if (!user) {
+      navigate(PATHS.REGISTER, { replace: true });
+      return;
+    }
+
+    createPet(user.username, petName, egg);
     navigate(PATHS.PLAY, { replace: true });
   };
 

@@ -1,6 +1,7 @@
 import { useAuthStore } from "../store/authStore";
 import { usePetStore } from "../store/petStore";
 import { formatAge } from "../helpers/usePetActions";
+import { Link } from "react-router-dom";
 
 export function Home() {
   const { user, isLoggedIn } = useAuthStore();
@@ -29,9 +30,12 @@ export function Home() {
               <>
                 You don't have an active pet right now. Head to the hatchery to
                 get one!
-                <button className="bg-minsk-500 hover:bg-minsk-700 ml-2 mt-4 rounded-lg px-4 py-2 text-white">
-                  <a href="/hatchery">Go to Hatchery</a>
-                </button>
+                <Link
+                  to="/hatchery"
+                  className="bg-minsk-500 hover:bg-minsk-700 ml-2 mt-4 inline-block rounded-lg px-4 py-2 text-white"
+                >
+                  Go to Hatchery
+                </Link>
               </>
             )}
           </div>

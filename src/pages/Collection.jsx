@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useEggStore } from "../store/eggStore";
 import { usePetStore } from "../store/petStore";
 
@@ -5,7 +6,7 @@ export function Collection() {
   const { eggs } = useEggStore();
   const { pets } = usePetStore();
 
-  const livingPets = pets.filter((p) => p.isAlive);
+  const livingPets = useMemo(() => pets.filter((p) => p.isAlive), [pets]);
 
   return (
     <div

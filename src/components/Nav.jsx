@@ -3,10 +3,12 @@ import { usePetStore } from "../store/petStore";
 import { Link } from "react-router-dom";
 
 export function Nav() {
-  const { user, isLoggedIn, logout } = useAuthStore();
-  const { activePetId } = usePetStore();
-
-  const activePet = usePetStore().pets.find(p => p.id === activePetId) ?? null
+  const user = useAuthStore((state) => state.user);
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const logout = useAuthStore((state) => state.logout);
+  const activePet = usePetStore(
+    (state) => state.pets.find((p) => p.id === state.activePetId) ?? null,
+  );
 
   return (
     <nav className="bg-minsk-950 flex items-center justify-between p-4 text-white">
@@ -29,13 +31,13 @@ export function Nav() {
             Home
           </Link>
         </li>
-        <li>
-          <Link to="/collection" className="hover:text-minsk-300">
-            Collection
-          </Link>
-        </li>
         {isLoggedIn && (
           <>
+            <li>
+              <Link to="/collection" className="hover:text-minsk-300">
+                Collection
+              </Link>
+            </li>
             <li>
               <Link to="/account" className="hover:text-minsk-300">
                 Account

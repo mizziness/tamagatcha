@@ -1,17 +1,16 @@
-import { useMemo } from "react"
 import { useAuthStore } from "../store/authStore"
 import { safeParseEvents } from "../helpers/utilities"
 
 export function EventLog({ username, petId }) {
   const session = useAuthStore((state) => state.user)
   const getEventsKey = `tamagacha_events_${username}_${petId}`
-  const events = useMemo(() => {
-    if (!session || !username || !petId) return []
 
-    return safeParseEvents(localStorage.getItem(getEventsKey))
-  }, [session, username, petId, getEventsKey])
+  const events =
+    !session || !username || !petId
+      ? []
+      : safeParseEvents(localStorage.getItem(getEventsKey));
 
-  const ordered = useMemo(() => [...events].reverse(), [events])
+  const ordered = [...events].reverse();
 
   const prettyDate = (timestamp) => {
     const date = new Date(timestamp)

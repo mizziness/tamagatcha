@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ReactSVG } from "react-svg";
 import { animated as Animated, useSpring } from "@react-spring/web";
 import { buildEggSet, eggParams } from "../helpers/eggSelection";
+import { cleanUserInput } from "../helpers/utilities";
 
 const getRandomRestMs = () => 3000 + Math.random() * 6000;
 const getRandomWiggleStepDurationMs = () => 70 + Math.random() * 50;
@@ -11,7 +12,8 @@ function EggCard({ egg, eggParams }) {
   const [isPageVisible, setIsPageVisible] = useState(() => !document.hidden);
   const [isHovered, setIsHovered] = useState(false);
   const [wiggleSpring, wiggleApi] = useSpring(() => ({ rotateZ: 0 }));
-  const eggName = `${(egg.rarity + " " + egg.color.split("-")[1].slice(0) + " " + egg.pattern).toLowerCase() + " egg"}`;
+  const eggTagline = `${(egg.rarity + " " + egg.color.split("-")[1].slice(0) + " " + egg.pattern).toLowerCase() + " egg"}`;
+  const inputId = `egg-radio-${egg.id}`;
 
   useEffect(() => {
     const onVisibilityChange = () => {
@@ -86,8 +88,8 @@ function EggCard({ egg, eggParams }) {
     <label
       key={egg.id}
       id={`egg-choice-${egg.id}`}
+      htmlFor={inputId}
       className="group cursor-pointer"
-      tabIndex="0"
       aria-labelledby={`egg-${egg.id}`}
       onPointerEnter={() => {
         setIsHovered(true);
@@ -97,10 +99,11 @@ function EggCard({ egg, eggParams }) {
       }}
     >
       <input
+        id={inputId}
         type="radio"
         name="eggId"
         value={egg.id}
-        className="sr-only hidden"
+        className="peer sr-only"
       />
 
       <div
@@ -164,7 +167,7 @@ function EggCard({ egg, eggParams }) {
         id={`egg-${egg.id}`}
         className="mt-2 text-center text-xs capitalize leading-[120%] text-gray-700"
       >
-        {eggName}
+        {eggTagline}
       </div>
     </label>
   );
@@ -223,11 +226,11 @@ export function EggSelection({ selectEgg }) {
           const petName = formData.get("petName");
           const eggId = formData.get("eggId");
           const eggDetails = eggs.find((e) => e.id === eggId);
-
-          if (petName && eggId && eggDetails) {
-            selectEgg(petName, eggDetails);
+          const cleanedPetName = cleanUserInput(petName);
+          if (cleanedPetName && eggId && eggDetails) {
+            selectEgg(cleanedPetName, eggDetails);
           } else {
-            alert("Please enter a name for your pet and select an egg!");
+            alert("Please enter a valid name for your pet and select an egg!");
           }
         }}
       >
@@ -237,23 +240,25 @@ export function EggSelection({ selectEgg }) {
             type="text"
             name="petName"
             required
+            minLength="3"
             className="mb-4 w-full rounded border p-2"
           />
         </label>
 
         <hr className="border-minsk-300 my-6" />
 
-        <p className="text-lg font-semibold">Pick an Egg:</p>
-
-        <div
-          ref={eggSelectionRef}
-          id="egg-selection"
-          className="my-4 grid grid-cols-3 items-start justify-center gap-6"
-        >
-          {eggs.map((egg) => (
-            <EggCard key={egg.id} egg={egg} eggParams={eggParams} />
-          ))}
-        </div>
+        <fieldset className="my-4">
+          <legend className="text-lg font-semibold">Pick an Egg:</legend>
+          <div
+            ref={eggSelectionRef}
+            id="egg-selection"
+            className="my-4 grid grid-cols-3 items-start justify-center gap-6"
+          >
+            {eggs.map((egg) => {
+              return <EggCard key={egg.id} egg={egg} eggParams={eggParams} />;
+            })}
+          </div>
+        </fieldset>
 
         <p
           role="status"
