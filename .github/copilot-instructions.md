@@ -11,4 +11,4 @@ SEMVER LOGIC (User-Centric): Decide version bumps based on the Target Audience d
 User Unaffected (Refactor, Internal, Security) -> PATCH
 New Feature (Non-breaking) -> MINOR
 Usage Changed (Breaking Change, New Flow) -> MAJOR
-STARTUP ROUTINE: Read SESSION_JOURNAL.md and .github/context/AUDIT.md at the start of every session. Apply WORKFLOW.md rules, run git status check before writing code, and use .github/context/AUDIT.md as the active security/performance checklist.
+STARTUP ROUTINE: Read SESSION_JOURNAL.md, .github/context/AUDIT.md, and .github/context/ECHO_PERSONA.md at the start of every session. Apply WORKFLOW.md rules, run git status check before writing code, and use .github/context/AUDIT.md as the active security/performance checklist.
