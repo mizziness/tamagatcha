@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { safeParseEvents, safeParseSession } from '../helpers/utilities'
+import { rollSize, rollTemperament, rollAffinity, rollPersonality, rollEyeColor, rollEyeShape, rollEyebrows } from '../helpers/usePetActions'
 
 const getPetsKey = (username) => `tamagacha_pets_${username}`
 const getActiveKey = (username) => `tamagacha_active_${username}`
@@ -24,9 +25,9 @@ export const usePetStore = create((set, get) => ({
   activePetId: initialActive,
 
   addPetEvent: (username, petId, event) => {
-    const newEvent = { 
-      ...EVENT_LOG, 
-      id: `${crypto.randomUUID()}`, 
+    const newEvent = {
+      ...EVENT_LOG,
+      id: `${crypto.randomUUID()}`,
       owner: username,
       petID: petId,
       timestamp: Date.now(),
@@ -79,6 +80,24 @@ export const usePetStore = create((set, get) => ({
       stats: {
         hunger: 100, happiness: 100, energy: 100,
         health: 100, cleanliness: 100, age: 0, stage: 'baby'
+      },
+      dna: {
+        color: egg.color,
+        gender: egg.gender,
+        rarity: egg.rarity,
+        species: "slime",
+        pattern: egg.pattern,
+        size: rollSize(),
+        temperment: rollTemperament(),
+        affinity: rollAffinity(),
+        personality: rollPersonality(),
+        eyeColor: rollEyeColor(),
+        eyebrows: rollEyebrows(),
+        eyeShape: rollEyeShape()
+      },
+      lineage: {
+        parents: {},
+        offspring: {},
       }
     }
 

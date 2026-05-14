@@ -3,8 +3,8 @@ export const eggParams = {
   patterns: ['plain', 'speckled'],
   genders: ['male', 'female'],
   rarityWeights: {
-    common: 60,
-    uncommon: 17,
+    common: 50,
+    uncommon: 27,
     rare: 13,
     epic: 6,
     legendary: 3,
@@ -20,6 +20,20 @@ export const eggParams = {
     mythic: 'border-6 border-fuchsia-300 bg-fuchsia-100',
     divine: 'border-6 border-rose-300 bg-rose-100',
   },
+  traits: {
+    temperament: ['calm', 'curious', 'bold', 'chaotic', 'timid', 'playful', 'stoic', 'mischievous'],
+    affinity: ['shadow', 'light', 'stone', 'wind', 'metal', 'ice', 'thunder', 'nature'],
+    personality: ['energetic', 'shy', 'friendly', 'grumpy', 'loyal', 'independent', 'affectionate', 'proud'],
+  },
+  appearance: {
+    eyeShape: [ 'oval','round', 'almond', 'slitted', 'large', 'small'],
+    eyeColor: ['black', 'white', 'pink', 'blue', 'amber', 'sky', 'emerald', 'red', 'violet', 'gray', 'lime', 'cyan', 'indigo', 'orange', 'blue'],
+    eyebrows: ['none', 'thin', 'thick', 'arched', 'straight'],
+    size: ['tiny', 'small', 'medium', 'large', 'huge'],
+    skin: ['smooth', 'bumpy', 'spiky', 'glossy', 'matte'],
+    ornaments: ['horns', 'wings', 'tail', 'none'],
+    clothes: ['hat', 'scarf', 'glasses', 'none'],
+  }
 }
 
 function pickRarity(rarityWeights) {

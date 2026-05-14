@@ -1,14 +1,12 @@
 import { formatAge } from "../helpers/usePetActions";
+import { ReactSVG } from "react-svg";
 
 const scale = 1 + Math.sin(Math.random() * 500) * 0.05;
 
 export function Pet({ pet, isAlive }) {
   // Helper: Get pet mood
   const getMood = () => {
-    const avgStats =
-      (pet.hunger + pet.happiness + pet.energy + pet.health + pet.cleanliness) /
-      5;
-
+    const avgStats = (pet.hunger + pet.happiness + pet.energy + pet.health + pet.cleanliness) / 5;
     if (!isAlive) return "dead";
     if (avgStats > 70) return "happy";
     if (avgStats > 40) return "neutral";
@@ -30,11 +28,31 @@ export function Pet({ pet, isAlive }) {
         className="text-9xl transition-transform duration-300 ease-in-out"
         style={{ transform: `scale(${scale})` }}
       >
-        {getMoodEmoji()}
+
       </div>
-      <div className="text-xl font-semibold">{pet.name}</div>
+      <div className="flex items-center gap-2 text-xl font-semibold">
+        <div>{pet.name}</div>
+        <div>{getMoodEmoji()}</div>
+        <div
+          className="egg-gender rounded-full bg-white bg-opacity-75 p-1"
+          aria-label={`Egg Gender: ${pet.egg?.gender ?? "unknown"}`}
+        >
+          <ReactSVG
+            wrapper="div"
+            src={`/images/icons/${pet.egg?.gender === "male" ? "mars" : "venus"}-solid.svg`}
+            alt=""
+            className={`gender-icon no-sr h-6 w-6 text-[1.5rem] ${pet.egg?.gender === "male" ? "fill-sky-500" : "fill-pink-500"}`}
+            beforeInjection={(svg) => {
+              svg.classList.add("text-[1.5rem]");
+              svg.setAttribute("style", `width: 24px; height: 24px;`);
+            }}
+          />
+        </div>
+      </div>
       <div className="text-sm text-gray-600">
-        Age: {formatAge(pet.age)}<br />Stage: {pet.stage} | Mood: {getMood()}
+        Age: {formatAge(pet.age)}
+        <br />
+        Stage: {pet.stage} | Mood: {getMood()}
       </div>
     </div>
   );
